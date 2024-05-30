@@ -1,0 +1,437 @@
+-- Check if the GUI already exists and destroy it if found
+local existingGui = game.Players.LocalPlayer.PlayerGui:FindFirstChild("TWRGui")
+if existingGui then
+    existingGui:Destroy()
+end
+
+-- Function to create a UICorner
+local function createUICorner(parent, radius)
+    local uiCorner = Instance.new("UICorner")
+    uiCorner.CornerRadius = UDim.new(0, radius)
+    uiCorner.Parent = parent
+end
+
+-- Create a ScreenGui to hold our GUI elements
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "TWRGui"
+screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+-- Define colors
+local darkGrey = Color3.fromRGB(20, 20, 20) -- Dark grey (#141414)
+local lightGrey = Color3.fromRGB(25, 25, 25) -- Light grey (#191919)
+local darkRed = Color3.fromRGB(173, 16, 16) -- Dark red (#ad1010)
+local grey = Color3.fromRGB(100, 100, 100) -- Grey (#646464)
+
+-- Create the main frame
+local mainFrame = Instance.new("Frame")
+mainFrame.Name = "MainFrame"
+mainFrame.Size = UDim2.new(0, 589, 0, 308) -- 589 width, 308 height
+mainFrame.Position = UDim2.new(0.5, -294, 0.5, -154) -- Centered on the screen
+mainFrame.BackgroundColor3 = darkGrey -- Dark grey (#141414)
+mainFrame.BorderSizePixel = 0
+mainFrame.Parent = screenGui
+createUICorner(mainFrame, 10) -- Add UICorner to main frame
+
+-- Create the sidebar
+local sidebar = Instance.new("Frame")
+sidebar.Size = UDim2.new(0.25, 0, 1, 0) -- 25% width of the main frame
+sidebar.Position = UDim2.new(0, 0, 0, 0) -- Start from the top-left corner
+sidebar.BackgroundColor3 = lightGrey -- Light grey (#191919)
+sidebar.BorderSizePixel = 0
+sidebar.Parent = mainFrame
+createUICorner(sidebar, 10) -- Add UICorner to sidebar
+
+-- Create a TextLabel for "TWR"
+local textLabel = Instance.new("TextLabel")
+textLabel.Name = "MyTextLabel"
+textLabel.Size = UDim2.new(0, 50, 0, 50) -- Width: 50 pixels, Height: 50 pixels
+textLabel.Position = UDim2.new(0.02, 0, -0.02, 0) -- Move text label to 2% from the left and aligned with the top, with a slight upward offset
+textLabel.BackgroundColor3 = Color3.new(0, 0, 0) -- Black background
+textLabel.BackgroundTransparency = 1 -- Make the background transparent
+textLabel.TextColor3 = Color3.new(1, 1, 1) -- White text
+textLabel.Text = "TWR" -- Text to display
+textLabel.TextSize = 10 -- Text size
+textLabel.TextScaled = true -- Scale text based on size of the label
+textLabel.Font = Enum.Font.SourceSansBold -- Set the font to SourceSansBold
+textLabel.Parent = mainFrame -- Parent to the main frame
+
+-- Create a smaller TextLabel for version information
+local versionLabel = Instance.new("TextLabel")
+versionLabel.Name = "VersionLabel"
+versionLabel.Size = UDim2.new(0, 30, 0, 25) -- Width: 30 pixels, Height: 25 pixels
+versionLabel.Position = UDim2.new(0.02, 0, 0.08, 0) -- Position it below the "TWR" text
+versionLabel.BackgroundColor3 = Color3.new(0, 0, 0) -- Black background
+versionLabel.BackgroundTransparency = 1 -- Make the background transparent
+versionLabel.TextColor3 = Color3.fromRGB(100, 100, 100) -- Set text color to #646464
+versionLabel.Text = "v1.0" -- Version information
+versionLabel.TextSize = 16 -- Smaller text size
+versionLabel.Font = Enum.Font.SourceSansBold -- Set the font to SourceSansBold
+versionLabel.Parent = mainFrame -- Parent to the main frame
+
+-- Create a container for tab contents
+local contentFrame = Instance.new("Frame")
+contentFrame.Name = "ContentFrame"
+contentFrame.Size = UDim2.new(0.75, 0, 1, 0) -- 75% width of the main frame
+contentFrame.Position = UDim2.new(0.25, 0, 0, 0) -- Positioned next to the sidebar
+contentFrame.BackgroundColor3 = darkGrey -- Dark grey background
+contentFrame.BorderSizePixel = 0
+contentFrame.Parent = mainFrame
+createUICorner(contentFrame, 10) -- Add UICorner to content frame
+
+-- Function to create a tab button
+local function createTabButton(text, position)
+    local button = Instance.new("TextButton")
+    button.Size = UDim2.new(0.8, 0, 0, 30) -- 80% width of the sidebar, 30 pixels height
+    button.Position = UDim2.new(0.1, 0, position, 0) -- Centered horizontally, positioned vertically based on input
+    button.BackgroundColor3 = lightGrey -- Light grey background
+    button.BorderSizePixel = 0
+    button.TextColor3 = grey -- Grey text color
+    button.Text = text -- Button text
+    button.TextSize = 14 -- Text size
+    button.Font = Enum.Font.SourceSansBold -- Set the font to SourceSansBold
+    button.Parent = sidebar -- Parent to the sidebar
+
+    return button
+end
+
+-- Function to clear content frame
+local function clearContent()
+    for _, child in pairs(contentFrame:GetChildren()) do
+        child:Destroy()
+    end
+end
+
+-- Function to get player's avatar image URL
+local function getAvatarUrl(userId)
+    local url = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. tostring(userId) .. "&width=420&height=420&format=png"
+    return url
+end
+
+-- HOME TAB
+local function showTabContent(tabName)
+    clearContent()
+
+    if tabName == "HOME" then
+        local userId = game.Players.LocalPlayer.UserId
+        local avatarUrl = getAvatarUrl(userId)
+
+        -- Create welcome label
+        local welcomeLabel = Instance.new("TextLabel")
+        welcomeLabel.Size = UDim2.new(1, 0, 0, 70)
+        welcomeLabel.Position = UDim2.new(0, 0, 0.0, 0)
+        welcomeLabel.BackgroundColor3 = darkGrey
+        welcomeLabel.BackgroundTransparency = 1
+        welcomeLabel.TextColor3 = Color3.new(1, 1, 1)
+        welcomeLabel.Text = "Welcome to TWR"
+        welcomeLabel.TextSize = 36
+        welcomeLabel.Font = Enum.Font.SourceSansBold
+        welcomeLabel.Parent = contentFrame
+
+    -- Create ImageLabel for avatar
+    local avatarImage = Instance.new("ImageLabel")
+    avatarImage.Size = UDim2.new(0, 200, 0.03, 200) -- Adjust size to 200x200
+    avatarImage.Position = UDim2.new(0.5, -100, 0, 0) -- Centered horizontally and positioned slightly higher
+    avatarImage.BackgroundColor3 = darkGrey
+    avatarImage.BackgroundTransparency = 1
+    avatarImage.Image = avatarUrl
+    avatarImage.Parent = contentFrame
+
+    -- Create TextLabel for display name
+    local displayNameLabel = Instance.new("TextLabel")
+    displayNameLabel.Size = UDim2.new(0, 200, 0, 30) -- Width: 200 pixels, Height: 30 pixels
+    displayNameLabel.Position = UDim2.new(0.5, -100, 0.77, -15) -- Centered horizontally and vertically below the avatar image
+    displayNameLabel.BackgroundColor3 = darkGrey
+    displayNameLabel.BackgroundTransparency = 1
+    displayNameLabel.TextColor3 = Color3.new(1, 1, 1)
+    displayNameLabel.Text = game.Players.LocalPlayer.DisplayName -- Set text to player's display name
+    displayNameLabel.TextSize = 30
+    displayNameLabel.Font = Enum.Font.SourceSansBold
+    displayNameLabel.Parent = contentFrame
+
+
+        -- Create version label
+        local freeVersionLabel = Instance.new("TextLabel")
+        freeVersionLabel.Size = UDim2.new(1, 0, 0, 50)
+        freeVersionLabel.Position = UDim2.new(0.01, 0, 0.82, 0)
+        freeVersionLabel.BackgroundColor3 = darkGrey
+        freeVersionLabel.BackgroundTransparency = 1
+        freeVersionLabel.TextColor3 = Color3.new(1, 1, 1)
+        freeVersionLabel.Text = "Free Version"
+        freeVersionLabel.TextSize = 24
+        freeVersionLabel.Font = Enum.Font.SourceSansBold
+        freeVersionLabel.Parent = contentFrame
+    else
+        local contentLabel = Instance.new("TextLabel")
+        contentLabel.Size = UDim2.new(1, 0, 1, 0)
+        contentLabel.Position = UDim2.new(0, 0, 0, 0)
+        contentLabel.BackgroundColor3 = darkGrey
+        contentLabel.BackgroundTransparency = 1
+        contentLabel.TextColor3 = Color3.new(1, 1, 1)
+        contentLabel.Text = tabName .. " Content"
+        contentLabel.TextSize = 20
+        contentLabel.Font = Enum.Font.SourceSansBold
+        contentLabel.Parent = contentFrame
+    end
+end
+
+-- MAIN TAB
+-- Function to show content for different tabs
+local function showTabContent(tabName)
+    clearContent() -- Clear previous content
+
+    if tabName == "HOME" then
+        local userId = game.Players.LocalPlayer.UserId
+        local avatarUrl = getAvatarUrl(userId)
+
+        -- Create welcome label
+        local welcomeLabel = Instance.new("TextLabel")
+        welcomeLabel.Size = UDim2.new(1, 0, 0, 70)
+        welcomeLabel.Position = UDim2.new(0, 0, 0.0, 0)
+        welcomeLabel.BackgroundColor3 = darkGrey
+        welcomeLabel.BackgroundTransparency = 1
+        welcomeLabel.TextColor3 = Color3.new(1, 1, 1)
+        welcomeLabel.Text = "Welcome to TWR"
+        welcomeLabel.TextSize = 36
+        welcomeLabel.Font = Enum.Font.SourceSansBold
+        welcomeLabel.Parent = contentFrame
+
+        -- Create ImageLabel for avatar
+        local avatarImage = Instance.new("ImageLabel")
+        avatarImage.Size = UDim2.new(0, 200, 0.03, 200) -- Adjust size to 200x200
+        avatarImage.Position = UDim2.new(0.5, -100, 0, 0) -- Centered horizontally and positioned slightly higher
+        avatarImage.BackgroundColor3 = darkGrey
+        avatarImage.BackgroundTransparency = 1
+        avatarImage.Image = avatarUrl
+        avatarImage.Parent = contentFrame
+
+        -- Create TextLabel for display name
+        local displayNameLabel = Instance.new("TextLabel")
+        displayNameLabel.Size = UDim2.new(0, 200, 0, 30) -- Width: 200 pixels, Height: 30 pixels
+        displayNameLabel.Position = UDim2.new(0.5, -100, 0.77, -15) -- Centered horizontally and vertically below the avatar image
+        displayNameLabel.BackgroundColor3 = darkGrey
+        displayNameLabel.BackgroundTransparency = 1
+        displayNameLabel.TextColor3 = Color3.new(1, 1, 1)
+        displayNameLabel.Text = game.Players.LocalPlayer.DisplayName -- Set text to player's display name
+        displayNameLabel.TextSize = 30
+        displayNameLabel.Font = Enum.Font.SourceSansBold
+        displayNameLabel.Parent = contentFrame
+
+        -- Create version label
+        local freeVersionLabel = Instance.new("TextLabel")
+        freeVersionLabel.Size = UDim2.new(1, 0, 0, 50)
+        freeVersionLabel.Position = UDim2.new(0.01, 0, 0.82, 0)
+        freeVersionLabel.BackgroundColor3 = darkGrey
+        freeVersionLabel.BackgroundTransparency = 1
+        freeVersionLabel.TextColor3 = Color3.new(1, 1, 1)
+        freeVersionLabel.Text = "Free Version"
+        freeVersionLabel.TextSize = 24
+        freeVersionLabel.Font = Enum.Font.SourceSansBold
+        freeVersionLabel.Parent = contentFrame
+
+    elseif tabName == "MAIN" then
+        -- Content for the MAIN tab
+
+        -- Create search bar
+        local searchBar = Instance.new("TextBox")
+        searchBar.Name = "SearchBar"
+        searchBar.Size = UDim2.new(0.9, 0, 0, 30) -- 90% width of the content frame, 30 pixels height
+        searchBar.Position = UDim2.new(0.05, 0, 0.1, 0) -- Centered horizontally, positioned 10% from the top
+        searchBar.BackgroundColor3 = lightGrey -- Light grey background
+        searchBar.BorderSizePixel = 0
+        searchBar.TextColor3 = Color3.new(1, 1, 1) -- White text color
+        searchBar.PlaceholderText = "Search..." -- No placeholder text
+        searchBar.Text = "" -- Clear any default text
+        searchBar.TextSize = 14 -- Text size
+        searchBar.Font = Enum.Font.SourceSansBold -- Set the font to SourceSansBold
+        searchBar.Parent = contentFrame -- Parent to the content frame
+
+        -- Function to handle search input
+        searchBar.FocusLost:Connect(function(enterPressed)
+            if enterPressed then
+                local searchTerm = searchBar.Text
+                -- Perform search or filter based on searchTerm
+                print("Search term:", searchTerm)
+            end
+        end)
+-- Create buttons under the search bar
+local function addButton(text, func, position)
+    local button = Instance.new("TextButton")
+    button.Size = UDim2.new(0.3, 0, 0, 50) -- 50 pixels height and 30% width of the content frame
+    button.Position = position -- Set the specified position
+    button.AnchorPoint = Vector2.new(0, 0.5) -- Anchor point to the left
+    button.BackgroundColor3 = darkGrey -- Dark grey background
+    button.BorderSizePixel = 0
+    button.TextColor3 = Color3.new(1, 1, 1) -- White text color
+    button.Text = text -- Button text
+    button.TextSize = 18 -- Increase text size
+    button.Font = Enum.Font.SourceSansBold -- Set the font to SourceSansBold
+    button.Parent = contentFrame -- Parent to the content frame
+    button.MouseButton1Click:Connect(func)
+end
+
+-- Calculate the vertical spacing between buttons
+local buttonSpacing = 10
+local startY = 0.35 -- Starting Y position above the search bar
+local buttonOffsetY = 0.2 -- Offset for the Y position of the second row of buttons
+local buttonLeftX = 0.02 -- X position for leftmost buttons
+
+-- Add buttons with appropriate positions and text
+addButton("Button1", function()
+    print("Button 1 clicked!")
+end, UDim2.new(buttonLeftX, 0, startY, 0)) -- Position for Button1
+
+addButton("Button2", function()
+    print("Button 2 clicked!")
+end, UDim2.new(buttonLeftX + 0.33, 0, startY, 0)) -- Position for Button2
+
+addButton("Button3", function()
+    print("Button 3 clicked!")
+end, UDim2.new(buttonLeftX + 0.66, 0, startY, 0)) -- Position for Button3
+
+addButton("Button4", function()
+    print("Button 4 clicked!")
+end, UDim2.new(buttonLeftX, 0, startY + buttonOffsetY, 0)) -- Position for Button4
+
+addButton("Button5", function()
+    print("Button 5 clicked!")
+end, UDim2.new(buttonLeftX + 0.33, 0, startY + buttonOffsetY, 0)) -- Position for Button5
+
+addButton("Button6", function()
+    print("Button 6 clicked!")
+end, UDim2.new(buttonLeftX + 0.66, 0, startY + buttonOffsetY, 0)) -- Position for Button6
+
+
+
+
+
+
+
+
+
+
+    else
+        -- Content for other tabs
+    end
+end
+
+
+
+
+-- Create tab buttons and set up their behavior
+local tabButtons = {
+    createTabButton("HOME", 0.2),
+    createTabButton("MAIN", 0.3),
+    createTabButton("TOGGLE", 0.4),
+    createTabButton("AUTOBUY", 0.5),
+    createTabButton("TELEPORT", 0.6),
+    createTabButton("SETTINGS", 0.7),
+    createTabButton("CREDITS", 0.8)
+}
+
+local activeTabButton = nil
+
+for _, button in pairs(tabButtons) do
+    button.MouseEnter:Connect(function()
+        if button ~= activeTabButton then
+            button.Size = UDim2.new(1, 0, 0, 30) -- Make the button cover the entire sidebar width
+            button.Position = UDim2.new(0, 0, button.Position.Y.Scale, 0) -- Adjust position to fit the whole sidebar width
+            button.TextColor3 = Color3.new(1, 1, 1) -- Change text color to white on hover
+        end
+    end)
+
+    button.MouseLeave:Connect(function()
+        if button ~= activeTabButton then
+            button.Size = UDim2.new(0.8, 0, 0, 30) -- Revert button size
+            button.Position = UDim2.new(0.1, 0, button.Position.Y.Scale, 0) -- Revert button position
+            button.TextColor3 = grey -- Revert text color to grey when not hovered
+        end
+    end)
+
+    button.MouseButton1Click:Connect(function()
+        if activeTabButton then
+            activeTabButton.Size = UDim2.new(0.8, 0, 0, 30) -- Revert size of previously active tab
+            activeTabButton.Position = UDim2.new(0.1, 0, activeTabButton.Position.Y.Scale, 0) -- Revert position of previously active tab
+            activeTabButton.BackgroundColor3 = lightGrey -- Revert background color of previously active tab
+            activeTabButton.TextColor3 = grey -- Revert text color of previously active tab
+        end
+        button.Size = UDim2.new(1, 0, 0, 30) -- Make the clicked button cover the entire sidebar width
+        button.Position = UDim2.new(0, 0, button.Position.Y.Scale, 0) -- Adjust position to fit the whole sidebar width
+        button.BackgroundColor3 = darkRed -- Change background color to dark red on click
+        button.TextColor3 = Color3.new(1, 1, 1) -- Change text color to white on click
+        activeTabButton = button -- Update the active tab button
+        showTabContent(button.Text) -- Show content for the active tab
+    end)
+end
+
+-- Show initial content
+showTabContent("HOME")
+activeTabButton = tabButtons[1]
+activeTabButton.Size = UDim2.new(1, 0, 0, 30)
+activeTabButton.Position = UDim2.new(0, 0, activeTabButton.Position.Y.Scale, 0)
+activeTabButton.BackgroundColor3 = darkRed
+activeTabButton.TextColor3 = Color3.new(1, 1, 1)
+
+-- Define variables to store mouse input information
+local userInputService = game:GetService("UserInputService")
+local dragging
+local dragStart
+local startPos
+
+-- Function to handle mouse dragging
+local function startDrag(input)
+    dragging = true
+    dragStart = input.Position
+    startPos = mainFrame.Position
+
+    input.Changed:Connect(function()
+        if input.UserInputState == Enum.UserInputState.End then
+            dragging = false
+        end
+    end)
+end
+
+local function updateDrag(input)
+    if dragging then
+        local delta = input.Position - dragStart
+        local newPos = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+        mainFrame:TweenPosition(newPos, Enum.EasingDirection.Out, Enum.EasingStyle.Sine, 0.1, true)
+    end
+end
+
+-- Connect mouse input events
+mainFrame.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        startDrag(input)
+    end
+end)
+
+mainFrame.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement then
+        updateDrag(input)
+    end
+end)
+
+userInputService.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = false
+    end
+end)
+
+-- V toggle
+
+-- Function to check if chat is focused
+local function isChatFocused()
+    return game:GetService("UserInputService"):GetFocusedTextBox() ~= nil
+end
+
+-- Function to toggle UI visibility
+local function toggleUI()
+    screenGui.Enabled = not screenGui.Enabled
+end
+
+-- Connect key input event
+game:GetService("UserInputService").InputBegan:Connect(function(input)
+    if input.KeyCode == Enum.KeyCode.V and not isChatFocused() then
+        toggleUI()
+    end
+end)
