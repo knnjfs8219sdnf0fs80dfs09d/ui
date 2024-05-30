@@ -198,7 +198,7 @@ local function showTabContent(tabName)
         -- Create ImageLabel for avatar
         local avatarImage = Instance.new("ImageLabel")
         avatarImage.Size = UDim2.new(0, 150, 0.01, 150) -- Adjust size to 200x200
-        avatarImage.Position = UDim2.new(0.5, -100, 0, 0) -- Centered horizontally and positioned slightly higher
+        avatarImage.Position = UDim2.new(0.5, 1, 0, 0) -- Centered horizontally and positioned slightly higher
         avatarImage.BackgroundColor3 = darkGrey
         avatarImage.BackgroundTransparency = 1
         avatarImage.Image = avatarUrl
