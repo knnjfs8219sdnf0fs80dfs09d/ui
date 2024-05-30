@@ -65,7 +65,7 @@ versionLabel.BackgroundTransparency = 1 -- Make the background transparent
 versionLabel.TextColor3 = Color3.fromRGB(100, 100, 100) -- Set text color to #646464
 versionLabel.Text = "v1.0" -- Version information
 versionLabel.TextSize = 16 -- Smaller text size
-versionLabel.Font = Enum.Font.SourceSansBold -- Set the font to SourceSansBold
+versionLabel.Font = Enum.Font.SourceSans -- Set the font to SourceSansBold
 versionLabel.Parent = mainFrame -- Parent to the main frame
 
 -- Create a container for tab contents
