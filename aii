@@ -300,8 +300,8 @@ addButton("Button6", function()
 end, UDim2.new(buttonLeftX + 0.66, 0, startY + buttonOffsetY, 0)) -- Position for Button6
 
 addButton("Button7", function()
-    print("Button 1 clicked!")
-end, UDim2.new(buttonLeftX, 0, startY, 0)) 
+    print("Button 7 clicked!")
+end, UDim2.new(buttonLeftX, 0, startY + buttonOffsetZ, 0)) 
 
 
 
