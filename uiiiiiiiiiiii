@@ -20,26 +20,24 @@ screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 local darkGrey = Color3.fromRGB(20, 20, 20) -- Dark grey (#141414)
 local lightGrey = Color3.fromRGB(25, 25, 25) -- Light grey (#191919)
 local darkRed = Color3.fromRGB(173, 16, 16) -- Dark red (#ad1010)
-local grey = Color3.fromRGB(100, 100, 100) -- Grey (#646464)
+local grey = Color3.fromRGB(100, 100, 100) 
 
--- Create the main frame
 local mainFrame = Instance.new("Frame")
 mainFrame.Name = "MainFrame"
-mainFrame.Size = UDim2.new(0, 589, 0, 308) -- 589 width, 308 height
-mainFrame.Position = UDim2.new(0.5, -294, 0.5, -154) -- Centered on the screen
-mainFrame.BackgroundColor3 = darkGrey -- Dark grey (#141414)
+mainFrame.Size = UDim2.new(0, 589, 0, 308) 
+mainFrame.Position = UDim2.new(0.5, -294, 0.5, -154) 
+mainFrame.BackgroundColor3 = darkGrey 
 mainFrame.BorderSizePixel = 0
 mainFrame.Parent = screenGui
-createUICorner(mainFrame, 10) -- Add UICorner to main frame
+createUICorner(mainFrame, 10) 
 
--- Create the sidebar
 local sidebar = Instance.new("Frame")
-sidebar.Size = UDim2.new(0.25, 0, 1, 0) -- 25% width of the main frame
-sidebar.Position = UDim2.new(0, 0, 0, 0) -- Start from the top-left corner
-sidebar.BackgroundColor3 = lightGrey -- Light grey (#191919)
+sidebar.Size = UDim2.new(0.25, 0, 1, 0) 
+sidebar.Position = UDim2.new(0, 0, 0, 0) 
+sidebar.BackgroundColor3 = lightGrey 
 sidebar.BorderSizePixel = 0
 sidebar.Parent = mainFrame
-createUICorner(sidebar, 10) -- Add UICorner to sidebar
+createUICorner(sidebar, 10) 
 
 -- Create a TextLabel for "TWR"
 local textLabel = Instance.new("TextLabel")
@@ -65,7 +63,7 @@ versionLabel.BackgroundTransparency = 1 -- Make the background transparent
 versionLabel.TextColor3 = Color3.fromRGB(100, 100, 100) -- Set text color to #646464
 versionLabel.Text = "v1.0" -- Version information
 versionLabel.TextSize = 16 -- Smaller text size
-versionLabel.Font = Enum.Font.SourceSans -- Set the font to SourceSansBold
+versionLabel.Font = Enum.Font.SourceSansBold -- Set the font to SourceSansBold
 versionLabel.Parent = mainFrame -- Parent to the main frame
 
 -- Create a container for tab contents
@@ -274,34 +272,36 @@ end
 -- Calculate the vertical spacing between buttons
 local buttonSpacing = 10
 local startY = 0.35 -- Starting Y position above the search bar
-local buttonOffsetY = 0.2 -- Offset for the Y position of the second row of buttons
-local buttonLeftX = 0.02 -- X position for leftmost buttons
+local buttonOffsetY = 0.2 
+local buttonLeftX = 0.02 
 
--- Add buttons with appropriate positions and text
 addButton("Button1", function()
     print("Button 1 clicked!")
-end, UDim2.new(buttonLeftX, 0, startY, 0)) -- Position for Button1
+end, UDim2.new(buttonLeftX, 0, startY, 0)) 
 
 addButton("Button2", function()
     print("Button 2 clicked!")
-end, UDim2.new(buttonLeftX + 0.33, 0, startY, 0)) -- Position for Button2
+end, UDim2.new(buttonLeftX + 0.33, 0, startY, 0)) 
 
 addButton("Button3", function()
     print("Button 3 clicked!")
-end, UDim2.new(buttonLeftX + 0.66, 0, startY, 0)) -- Position for Button3
+end, UDim2.new(buttonLeftX + 0.66, 0, startY, 0)) 
 
 addButton("Button4", function()
     print("Button 4 clicked!")
-end, UDim2.new(buttonLeftX, 0, startY + buttonOffsetY, 0)) -- Position for Button4
+end, UDim2.new(buttonLeftX, 0, startY + buttonOffsetY, 0)) 
 
 addButton("Button5", function()
     print("Button 5 clicked!")
-end, UDim2.new(buttonLeftX + 0.33, 0, startY + buttonOffsetY, 0)) -- Position for Button5
+end, UDim2.new(buttonLeftX + 0.33, 0, startY + buttonOffsetY, 0)) 
 
 addButton("Button6", function()
     print("Button 6 clicked!")
 end, UDim2.new(buttonLeftX + 0.66, 0, startY + buttonOffsetY, 0)) -- Position for Button6
 
+addButton("Button7", function()
+    print("Button 1 clicked!")
+end, UDim2.new(buttonLeftX, 0, startY, 0)) 
 
 
 
