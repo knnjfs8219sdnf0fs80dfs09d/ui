@@ -228,8 +228,37 @@ local function showTabContent(tabName)
         freeVersionLabel.Font = Enum.Font.SourceSansBold
         freeVersionLabel.Parent = contentFrame
 
-    elseif tabName == "MAIN" then
-        -- Content for the MAIN tab
+elseif tabName == "MAIN" then
+    -- Content for the MAIN tab
+
+    -- Create a ScrollingFrame
+    local scrollingFrame = Instance.new("ScrollingFrame")
+    scrollingFrame.Size = UDim2.new(1, 0, 1, 0) -- Full size of content frame
+    scrollingFrame.CanvasSize = UDim2.new(1, 0, 1.5, 0) -- Adjust CanvasSize to make the frame scrollable
+    scrollingFrame.ScrollBarThickness = 10
+    scrollingFrame.BackgroundColor3 = darkGrey
+    scrollingFrame.BorderSizePixel = 0
+    scrollingFrame.Parent = contentFrame
+
+    -- Create a UIListLayout to manage the buttons layout
+    local uiListLayout = Instance.new("UIListLayout")
+    uiListLayout.Parent = scrollingFrame
+    uiListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+    uiListLayout.Padding = UDim.new(0, 5)
+
+    -- Add buttons to the scrolling frame
+    for i = 1, 15 do
+        local button = Instance.new("TextButton")
+        button.Size = UDim2.new(0.9, 0, 0, 40) -- 90% width of the scrolling frame, 40 pixels height
+        button.BackgroundColor3 = lightGrey -- Light grey background
+        button.BorderSizePixel = 0
+        button.TextColor3 = grey -- Grey text color
+        button.Text = "Button " .. i -- Button text
+        button.TextSize = 14 -- Text size
+        button.Font = Enum.Font.SourceSansBold -- Set the font to SourceSansBold
+        button.Parent = scrollingFrame -- Parent to the scrolling frame
+    end
+end
 
         -- Create search bar
         local searchBar = Instance.new("TextBox")
